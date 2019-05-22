@@ -1,11 +1,13 @@
 import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
+import axios from "axios";
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       inputValue: '',
-      list: ['呆呆', 'sada']
+      list: []
     }
   }
   handleChange = (e) => {
@@ -17,6 +19,17 @@ export default class App extends React.Component {
     this.setState({
       list: [...this.state.list, this.state.inputValue],
       inputValue: ''
+    })
+  }
+  componentDidMount() {
+    axios.get('/api/todolist').then(res => {
+      this.setState(() => {
+        return {
+          list: [...res.data]
+        }
+      })
+    }).catch(err => {
+      console.log(err);
     })
   }
   render() {
@@ -33,3 +46,6 @@ export default class App extends React.Component {
     )
   }
 }
+App.propTypes = {
+  inputValue: PropTypes.array
+};
