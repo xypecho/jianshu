@@ -10,6 +10,7 @@ export default class Todolist extends Component {
         this.state = store.getState();
         this.handleChange = this.handleChange.bind(this);
         this.handleStoreChange = this.handleStoreChange.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
         store.subscribe(this.handleStoreChange);
     }
     handleChange(e) {
@@ -22,6 +23,12 @@ export default class Todolist extends Component {
     handleStoreChange() {
         this.setState(store.getState())
     }
+    handleSearch() {
+        const action = {
+            type: 'add_todo_item'
+        }
+        store.dispatch(action);
+    }
     render() {
         return (
             <div className='todolist-wrapper'>
@@ -32,7 +39,7 @@ export default class Todolist extends Component {
                     enterButton="新增"
                     size="default"
                     onChange={this.handleChange}
-                    onSearch={value => console.log(value)}
+                    onSearch={this.handleSearch}
                 />
                 <List
                     size="default"
