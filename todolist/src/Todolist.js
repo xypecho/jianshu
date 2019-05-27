@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { List, Input } from 'antd';
 import store from './store/index.js';
+import actionCreators from './store/actionCreators.js';
 
 const Search = Input.Search;
 
@@ -14,19 +15,29 @@ export default class Todolist extends Component {
         store.subscribe(this.handleStoreChange);
     }
     handleChange(e) {
-        const action = {
-            type: 'change_input_value',
-            value: e.target.value
-        }
+        // const action = {
+        //     type: actionTypes.CHANGE_INPUT_VALUE,
+        //     value: e.target.value
+        // }
+        const action = actionCreators.getInputChangeAction(e.target.value);
         store.dispatch(action);
     }
     handleStoreChange() {
         this.setState(store.getState())
     }
     handleSearch() {
-        const action = {
-            type: 'add_todo_item'
-        }
+        // const action = {
+        //     type: actionTypes.ADD_TODO_ITEM
+        // }
+        const action = actionCreators.getAddTodoAction();
+        store.dispatch(action);
+    }
+    handleClick = (index) => {
+        // const action = {
+        //     type: actionTypes.DELETE_TODO_ITEM,
+        //     index
+        // }
+        const action = actionCreators.getDeleteTodoAction(index);
         store.dispatch(action);
     }
     render() {
@@ -45,7 +56,7 @@ export default class Todolist extends Component {
                     size="default"
                     bordered
                     dataSource={this.state.list}
-                    renderItem={item => <List.Item>{item}</List.Item>}
+                    renderItem={(item, index) => <List.Item onClick={() => this.handleClick(index)}>{item}</List.Item>}
                 />
             </div>
         )
