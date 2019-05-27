@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { List, Input } from 'antd';
 import store from './store/index.js';
 import actionCreators from './store/actionCreators.js';
-
-const Search = Input.Search;
+import TodolistUI from './TodolistUI.js';
 
 export default class Todolist extends Component {
     constructor(props) {
@@ -12,9 +10,11 @@ export default class Todolist extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleStoreChange = this.handleStoreChange.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
+        this.handleClick = this.handleClick.bind(this);
         store.subscribe(this.handleStoreChange);
     }
     handleChange(e) {
+        // 这是最初的写法
         // const action = {
         //     type: actionTypes.CHANGE_INPUT_VALUE,
         //     value: e.target.value
@@ -32,7 +32,7 @@ export default class Todolist extends Component {
         const action = actionCreators.getAddTodoAction();
         store.dispatch(action);
     }
-    handleClick = (index) => {
+    handleClick(index) {
         // const action = {
         //     type: actionTypes.DELETE_TODO_ITEM,
         //     index
@@ -42,23 +42,13 @@ export default class Todolist extends Component {
     }
     render() {
         return (
-            <div className='todolist-wrapper'>
-                <Search
-                    value={this.state.inputValue}
-                    className='todolist-search'
-                    placeholder="todolist info"
-                    enterButton="新增"
-                    size="default"
-                    onChange={this.handleChange}
-                    onSearch={this.handleSearch}
-                />
-                <List
-                    size="default"
-                    bordered
-                    dataSource={this.state.list}
-                    renderItem={(item, index) => <List.Item onClick={() => this.handleClick(index)}>{item}</List.Item>}
-                />
-            </div>
+            <TodolistUI
+                inputValue={this.state.inputValue}
+                handleChange={this.handleChange}
+                handleSearch={this.handleSearch}
+                list={this.state.list}
+                handleClick={this.handleClick}
+            />
         )
     }
 }
