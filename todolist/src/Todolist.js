@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import store from './store/index.js';
 import actionCreators from './store/actionCreators.js';
-import TodolistUI from './TodolistUI.js';
+// import TodolistUI from './TodolistUI.js';
+import { TodolistUI } from './TodolistUI.js';
 
 export default class Todolist extends Component {
     constructor(props) {
