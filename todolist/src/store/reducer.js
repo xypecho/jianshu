@@ -2,7 +2,7 @@ import actionTypes from './actionTypes.js';
 
 const defaultState = {
     inputValue: '',
-    list: [1, 2, 3]
+    list: []
 };
 
 // reducer可以接受state，但是绝对不能修改state
@@ -23,6 +23,12 @@ export default (state = defaultState, action) => {
         const newState = JSON.parse(JSON.stringify(state));
         console.log(newState)
         newState.list.splice(action.index, 1);
+        return newState;
+    }
+    if (action.type === actionTypes.INIT_TODO_ITEM) {
+        const newState = JSON.parse(JSON.stringify(state));
+        console.log(newState)
+        newState.list = action.value;
         return newState;
     }
     return state;

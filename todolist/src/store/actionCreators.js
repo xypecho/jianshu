@@ -18,4 +18,10 @@ export default {
             index
         }
     },
+    initTodoAction: (value) => {
+        return {
+            type: actionTypes.INIT_TODO_ITEM,
+            value
+        }
+    }
 }
