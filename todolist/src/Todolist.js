@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import store from './store/index.js';
-import actionCreators from './store/actionCreators.js';
+import  {actionCreators, getTodoList } from './store/actionCreators.js';
 import { TodolistUI } from './TodolistUI.js';
-import axios from 'axios';
+// import axios from 'axios';
 
 export default class Todolist extends Component {
     constructor(props) {
@@ -15,11 +15,13 @@ export default class Todolist extends Component {
         store.subscribe(this.handleStoreChange);
     }
     componentDidMount() {
-        axios.get('/api/todolist').then(res => {
-            console.log(res);
-            const action = actionCreators.initTodoAction(res.data);
-            store.dispatch(action);
-        })
+        // axios.get('/api/todolist').then(res => {
+        //     console.log(res);
+        //     const action = actionCreators.initTodoAction(res.data);
+        //     store.dispatch(action);
+        // })
+        const action = getTodoList();
+        store.dispatch(action);
     }
     handleChange(e) {
         // 这是最初的写法

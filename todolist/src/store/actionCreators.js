@@ -1,6 +1,7 @@
 import actionTypes from './actionTypes.js';
+import axios from 'axios';
 
-export default {
+export const actionCreators = {
     getInputChangeAction: (value) => {
         return {
             type: actionTypes.CHANGE_INPUT_VALUE,
@@ -23,5 +24,26 @@ export default {
             type: actionTypes.INIT_TODO_ITEM,
             value
         }
+    }
+    // getTodoList: () => {
+    //     return () => {
+    //         console.log(module)
+    //         // axios.get('/api/todolist').then(res => {
+    //         //     console.log(res.data);
+    //         //     const action = this.initTodoAction(res.data);
+    //         //     console.log(action)
+    //         //     store.dispatch(action);
+    //         // })
+    //     }
+    // }
+}
+export const getTodoList = () => {
+    return (dispatch) => {
+        axios.get('/api/todolist').then(res => {
+            console.log(res.data);
+            const action = actionCreators.initTodoAction(res.data);
+            console.log(action)
+            dispatch(action);
+        })
     }
 }
