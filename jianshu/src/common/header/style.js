@@ -58,11 +58,14 @@ export const NavWrapper=styled.div`
         top: 13px;
         width: 30px;
         height: 30px;
-        background: bisque;
         line-height: 30px;
         text-align: center;
         right: 10px;
         border-radius: 15px;
+        &.focused{
+            background:#969696;
+            color:#fff!important;
+        }
     }
 `
 
@@ -71,7 +74,7 @@ export const NavSearch = styled.input.attrs({
 })`
     border: none;
     outline: none;
-    padding: 0 40px 0 20px;
+    padding: 0 46px 0 20px;
     width: 160px;
     height: 38px;
     font-size: 14px;
@@ -81,8 +84,12 @@ export const NavSearch = styled.input.attrs({
     box-sizing:border-box;
     margin-top: 9px;
     padding-left: 15px;
+    transition: width .5s;
     &::placeholder{
         color: #999;
+    }
+    &.focused{
+        width:240px;
     }
 `;
 
