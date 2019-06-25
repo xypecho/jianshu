@@ -1,12 +1,11 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux';
 import { HeaderWrapper, Logo, Nav, NavItem, NavSearch, Addition, Button, NavWrapper } from './style';
+import { dispatch } from "rxjs/internal/observable/range";
 
-export default class Header extends Component {
+class Header extends Component {
     constructor(props) {
         super(props)
-        this.state = {
-            focused: false
-        }
         this.handleOnfocus = this.handleOnfocus.bind(this);
         this.handleOnblur = this.handleOnblur.bind(this);
     }
@@ -32,8 +31,8 @@ export default class Header extends Component {
                         <i className="iconfont">&#xe76a;</i>
                     </NavItem>
                     <NavWrapper>
-                        <NavSearch className={this.state.focused ? 'focused' : ''} onFocus={this.handleOnfocus} onBlur={this.handleOnblur}></NavSearch>
-                        <i className={this.state.focused ? 'focused iconfont' : 'iconfont'}>&#xe62d;</i>
+                        <NavSearch className={this.props.focused ? 'focused' : ''} onFocus={this.props.handleOnfocus} onBlur={this.props.handleOnblur}></NavSearch>
+                        <i className={this.props.focused ? 'focused iconfont' : 'iconfont'}>&#xe62d;</i>
                     </NavWrapper>
                 </Nav>
                 <Addition>
@@ -44,3 +43,25 @@ export default class Header extends Component {
         )
     }
 }
+const mapStateToProps = (state) => {
+    return {
+        focused: state.focused
+    }
+};
+const mapDispatchToProps = (dispatch) => {
+    return {
+        handleOnfocus() {
+            const action = {
+                type: 'search_focus'
+            }
+            dispatch(action);
+        },
+        handleOnblur() {
+            const action = {
+                type: 'search_blur'
+            }
+            dispatch(action);
+        }
+    }
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
