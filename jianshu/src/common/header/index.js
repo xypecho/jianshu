@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { HeaderWrapper, Logo, Nav, NavItem, NavSearch, Addition, Button, NavWrapper } from './style';
 import { dispatch } from "rxjs/internal/observable/range";
+import * as actionCreators from './store/actionCreators';
 
 class Header extends Component {
     constructor(props) {
@@ -51,16 +52,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         handleOnfocus() {
-            const action = {
-                type: 'search_focus'
-            }
-            dispatch(action);
+            dispatch(actionCreators.searchFocus());
         },
         handleOnblur() {
-            const action = {
-                type: 'search_blur'
-            }
-            dispatch(action);
+            dispatch(actionCreators.searchBlur());
         }
     }
 };
