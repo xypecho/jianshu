@@ -4,41 +4,12 @@ import { HeaderWrapper, Logo, Nav, NavItem, NavSearch, Addition, Button, NavWrap
 import { dispatch } from "rxjs/internal/observable/range";
 import * as actionCreators from './store/actionCreators';
 
-const getSearchItem = (show) => {
-    if (show) {
-        return (
-            <SearchInfo>
-                <SearchInfoTitle>
-                    热门搜索
-            <SearchInfoTitleSwitch>
-                        换一批
-            </SearchInfoTitleSwitch>
-                </SearchInfoTitle>
-                <div>
-                    <SearchInfoItem>教育</SearchInfoItem>
-                    <SearchInfoItem>教育</SearchInfoItem>
-                    <SearchInfoItem>学习教育</SearchInfoItem>
-                    <SearchInfoItem>教育</SearchInfoItem>
-                    <SearchInfoItem>我</SearchInfoItem>
-                    <SearchInfoItem>教育</SearchInfoItem>
-                    <SearchInfoItem>教育</SearchInfoItem>
-                    <SearchInfoItem>学习教育</SearchInfoItem>
-                    <SearchInfoItem>教育</SearchInfoItem>
-                    <SearchInfoItem>教育</SearchInfoItem>
-                    <SearchInfoItem>学习教育</SearchInfoItem>
-                </div>
-            </SearchInfo>
-        )
-    } else {
-        return null;
-    }
-}
-
 class Header extends Component {
     constructor(props) {
         super(props)
         this.handleOnfocus = this.handleOnfocus.bind(this);
         this.handleOnblur = this.handleOnblur.bind(this);
+        this.getSearchItem = this.getSearchItem.bind(this);
     }
     handleOnfocus() {
         this.setState({
@@ -49,6 +20,35 @@ class Header extends Component {
         this.setState({
             focused: false
         })
+    }
+    getSearchItem(show) {
+        if (show) {
+            return (
+                <SearchInfo>
+                    <SearchInfoTitle>
+                        热门搜索
+                        <SearchInfoTitleSwitch>
+                                    换一批
+                        </SearchInfoTitleSwitch>
+                    </SearchInfoTitle>
+                    <div>
+                        <SearchInfoItem>教育</SearchInfoItem>
+                        <SearchInfoItem>教育</SearchInfoItem>
+                        <SearchInfoItem>学习教育</SearchInfoItem>
+                        <SearchInfoItem>教育</SearchInfoItem>
+                        <SearchInfoItem>我</SearchInfoItem>
+                        <SearchInfoItem>教育</SearchInfoItem>
+                        <SearchInfoItem>教育</SearchInfoItem>
+                        <SearchInfoItem>学习教育</SearchInfoItem>
+                        <SearchInfoItem>教育</SearchInfoItem>
+                        <SearchInfoItem>教育</SearchInfoItem>
+                        <SearchInfoItem>学习教育</SearchInfoItem>
+                    </div>
+                </SearchInfo>
+            )
+        } else {
+            return null;
+        }
     }
     render() {
         return (
@@ -64,7 +64,7 @@ class Header extends Component {
                     <NavWrapper>
                         <NavSearch className={this.props.focused ? 'focused' : ''} onFocus={this.props.handleOnfocus} onBlur={this.props.handleOnblur}></NavSearch>
                         <i className={this.props.focused ? 'focused iconfont' : 'iconfont'}>&#xe62d;</i>
-                        {getSearchItem(this.props.focused)}
+                        {this.getSearchItem(this.props.focused)}
                     </NavWrapper>
                 </Nav>
                 <Addition>
