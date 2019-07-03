@@ -22,6 +22,7 @@ class Header extends Component {
         })
     }
     getSearchItem(show) {
+        const {list}=this.props;
         if (show) {
             return (
                 <SearchInfo>
@@ -32,7 +33,12 @@ class Header extends Component {
                         </SearchInfoTitleSwitch>
                     </SearchInfoTitle>
                     <div>
-                        <SearchInfoItem>教育</SearchInfoItem>
+                        {list.map((k,v)=>{
+                            return(
+                                <SearchInfoItem key={v}>{k}</SearchInfoItem>
+                            )
+                        })}
+                        {/* <SearchInfoItem>教育</SearchInfoItem>
                         <SearchInfoItem>教育</SearchInfoItem>
                         <SearchInfoItem>学习教育</SearchInfoItem>
                         <SearchInfoItem>教育</SearchInfoItem>
@@ -42,7 +48,7 @@ class Header extends Component {
                         <SearchInfoItem>学习教育</SearchInfoItem>
                         <SearchInfoItem>教育</SearchInfoItem>
                         <SearchInfoItem>教育</SearchInfoItem>
-                        <SearchInfoItem>学习教育</SearchInfoItem>
+                        <SearchInfoItem>学习教育</SearchInfoItem> */}
                     </div>
                 </SearchInfo>
             )
@@ -51,6 +57,7 @@ class Header extends Component {
         }
     }
     render() {
+        const {focused,handleOnfocus,handleOnblur}=this.props;
         return (
             <HeaderWrapper>
                 <Logo />
@@ -62,9 +69,9 @@ class Header extends Component {
                         <i className="iconfont">&#xe76a;</i>
                     </NavItem>
                     <NavWrapper>
-                        <NavSearch className={this.props.focused ? 'focused' : ''} onFocus={this.props.handleOnfocus} onBlur={this.props.handleOnblur}></NavSearch>
-                        <i className={this.props.focused ? 'focused iconfont' : 'iconfont'}>&#xe62d;</i>
-                        {this.getSearchItem(this.props.focused)}
+                        <NavSearch className={focused ? 'focused' : ''} onFocus={handleOnfocus} onBlur={handleOnblur}></NavSearch>
+                        <i className={focused ? 'focused iconfont' : 'iconfont'}>&#xe62d;</i>
+                        {this.getSearchItem(focused)}
                     </NavWrapper>
                 </Nav>
                 <Addition>
@@ -77,12 +84,14 @@ class Header extends Component {
 }
 const mapStateToProps = (state) => {
     return {
-        focused: state.header.focused
+        focused: state.header.focused,
+        list:state.header.list
     }
 };
 const mapDispatchToProps = (dispatch) => {
     return {
         handleOnfocus() {
+            dispatch(actionCreators.getList());
             dispatch(actionCreators.searchFocus());
         },
         handleOnblur() {
