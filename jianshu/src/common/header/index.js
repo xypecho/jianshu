@@ -21,34 +21,27 @@ class Header extends Component {
             focused: false
         })
     }
-    getSearchItem(show) {
-        const {list}=this.props;
-        if (show) {
+    getSearchItem() {
+        const { list, focused, page, totalPage, handleMouseEnter, handleMouseLeave, mouseIn, handleChangePage } = this.props;
+        const pageList = [];
+        for (let i = (page - 1) * 10; i < page * 10; i++) {
+            if (list[i]) {
+                pageList.push(
+                    <SearchInfoItem key={list[i]} >{list[i]}</SearchInfoItem>
+                )
+            }
+        }
+        if (focused || mouseIn) {
             return (
-                <SearchInfo>
+                <SearchInfo onMouseMove={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                     <SearchInfoTitle>
                         热门搜索
-                        <SearchInfoTitleSwitch>
-                                    换一批
+                        <SearchInfoTitleSwitch onClick={() => handleChangePage(page, totalPage)}>
+                            换一批
                         </SearchInfoTitleSwitch>
                     </SearchInfoTitle>
                     <div>
-                        {list.map((k,v)=>{
-                            return(
-                                <SearchInfoItem key={v}>{k}</SearchInfoItem>
-                            )
-                        })}
-                        {/* <SearchInfoItem>教育</SearchInfoItem>
-                        <SearchInfoItem>教育</SearchInfoItem>
-                        <SearchInfoItem>学习教育</SearchInfoItem>
-                        <SearchInfoItem>教育</SearchInfoItem>
-                        <SearchInfoItem>我</SearchInfoItem>
-                        <SearchInfoItem>教育</SearchInfoItem>
-                        <SearchInfoItem>教育</SearchInfoItem>
-                        <SearchInfoItem>学习教育</SearchInfoItem>
-                        <SearchInfoItem>教育</SearchInfoItem>
-                        <SearchInfoItem>教育</SearchInfoItem>
-                        <SearchInfoItem>学习教育</SearchInfoItem> */}
+                        {pageList}
                     </div>
                 </SearchInfo>
             )
@@ -57,7 +50,7 @@ class Header extends Component {
         }
     }
     render() {
-        const {focused,handleOnfocus,handleOnblur}=this.props;
+        const { focused, handleOnfocus, handleOnblur } = this.props;
         return (
             <HeaderWrapper>
                 <Logo />
@@ -85,7 +78,10 @@ class Header extends Component {
 const mapStateToProps = (state) => {
     return {
         focused: state.header.focused,
-        list:state.header.list
+        list: state.header.list,
+        page: state.header.page,
+        totalPage: state.header.totalPage,
+        mouseIn: state.header.mouseIn,
     }
 };
 const mapDispatchToProps = (dispatch) => {
@@ -96,6 +92,20 @@ const mapDispatchToProps = (dispatch) => {
         },
         handleOnblur() {
             dispatch(actionCreators.searchBlur());
+        },
+        handleMouseEnter() {
+            dispatch(actionCreators.MouseEnter());
+        },
+        handleMouseLeave() {
+            dispatch(actionCreators.MouseLeave());
+        },
+        handleChangePage(page, totalPage) {
+            console.log(page, totalPage)
+            if (page < totalPage) {
+                dispatch(actionCreators.changePage(page + 1));
+            } else {
+                dispatch(actionCreators.changePage(1));
+            }
         }
     }
 };
