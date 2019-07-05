@@ -7,19 +7,7 @@ import * as actionCreators from './store/actionCreators';
 class Header extends Component {
     constructor(props) {
         super(props)
-        this.handleOnfocus = this.handleOnfocus.bind(this);
-        this.handleOnblur = this.handleOnblur.bind(this);
         this.getSearchItem = this.getSearchItem.bind(this);
-    }
-    handleOnfocus() {
-        this.setState({
-            focused: true
-        })
-    }
-    handleOnblur() {
-        this.setState({
-            focused: false
-        })
     }
     getSearchItem() {
         const { list, focused, page, totalPage, handleMouseEnter, handleMouseLeave, mouseIn, handleChangePage } = this.props;
@@ -36,7 +24,8 @@ class Header extends Component {
                 <SearchInfo onMouseMove={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                     <SearchInfoTitle>
                         热门搜索
-                        <SearchInfoTitleSwitch onClick={() => handleChangePage(page, totalPage)}>
+                        <SearchInfoTitleSwitch onClick={() => handleChangePage(page, totalPage, this.spinIcon)}>
+                            <i ref={(icon) => { this.spinIcon = icon }} className="iconfont spin">&#xe606;</i>
                             换一批
                         </SearchInfoTitleSwitch>
                     </SearchInfoTitle>
@@ -50,7 +39,7 @@ class Header extends Component {
         }
     }
     render() {
-        const { focused, handleOnfocus, handleOnblur } = this.props;
+        const { focused, handleOnfocus, handleOnblur, list } = this.props;
         return (
             <HeaderWrapper>
                 <Logo />
@@ -62,8 +51,8 @@ class Header extends Component {
                         <i className="iconfont">&#xe76a;</i>
                     </NavItem>
                     <NavWrapper>
-                        <NavSearch className={focused ? 'focused' : ''} onFocus={handleOnfocus} onBlur={handleOnblur}></NavSearch>
-                        <i className={focused ? 'focused iconfont' : 'iconfont'}>&#xe62d;</i>
+                        <NavSearch className={focused ? 'focused' : ''} onFocus={() => handleOnfocus(list)} onBlur={handleOnblur}></NavSearch>
+                        <i className={focused ? 'focused iconfont zoom' : 'iconfont zoom'}>&#xe62d;</i>
                         {this.getSearchItem(focused)}
                     </NavWrapper>
                 </Nav>
@@ -86,8 +75,8 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
     return {
-        handleOnfocus() {
-            dispatch(actionCreators.getList());
+        handleOnfocus(list) {
+            (list.length === 0) && dispatch(actionCreators.getList());
             dispatch(actionCreators.searchFocus());
         },
         handleOnblur() {
@@ -99,8 +88,15 @@ const mapDispatchToProps = (dispatch) => {
         handleMouseLeave() {
             dispatch(actionCreators.MouseLeave());
         },
-        handleChangePage(page, totalPage) {
-            console.log(page, totalPage)
+        handleChangePage(page, totalPage, spinIcon) {
+            let originAngle = spinIcon.style.transform.replace(/[^0-9]/ig, '');
+            if (originAngle) {
+                originAngle = parseInt(originAngle, 10);
+            } else {
+                originAngle = 0;
+            }
+            console.log(originAngle)
+            spinIcon.style.transform = `rotate(${originAngle + 360}deg)`;
             if (page < totalPage) {
                 dispatch(actionCreators.changePage(page + 1));
             } else {
