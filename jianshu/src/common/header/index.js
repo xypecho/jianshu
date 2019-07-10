@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { HeaderWrapper, Logo, Nav, NavItem, NavSearch, Addition, Button, NavWrapper, SearchInfo, SearchInfoTitle, SearchInfoTitleSwitch, SearchInfoItem } from './style';
-import { dispatch } from "rxjs/internal/observable/range";
+// import { dispatch } from "rxjs/internal/observable/range";
 import * as actionCreators from './store/actionCreators';
 
 class Header extends Component {

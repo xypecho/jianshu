@@ -8,9 +8,6 @@ import Home from './pages/home';
 import Detail from './pages/detail';
 
 export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     return (
       <Provider store={store}>
