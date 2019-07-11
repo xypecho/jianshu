@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { HomeWrapper, HomeLeft, HomeRight } from './style';
 import Topic from './components/Topic';
 import List from './components/List';
+import Recommend from './components/Recommend';
 
 export default class Home extends Component {
     render() {
@@ -12,7 +13,9 @@ export default class Home extends Component {
                     <Topic />
                     <List />
                 </HomeLeft>
-                <HomeRight></HomeRight>
+                <HomeRight>
+                    <Recommend />
+                </HomeRight>
             </HomeWrapper>
         )
     }

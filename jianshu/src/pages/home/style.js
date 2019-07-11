@@ -19,8 +19,6 @@ export const HomeLeft = styled.div`
 export const HomeRight = styled.div`
     flex: 0 0 270px;
     margin-left:30px;
-    background:blue;
-    height:100px;
 `;
 
 export const TopicWrapper = styled.div`
@@ -83,3 +81,18 @@ export const ListInfo = styled.div`
         color: #999;
     }
 `;
+
+export const RecommendWrapper = styled.div`
+    margin-top: -4px;
+    padding-bottom: 4px;
+    min-height: 228px;
+`
+
+export const RecommendItem = styled.div`
+    width: 100%;
+    min-height: 50px;
+    margin-bottom: 6px;
+    border-radius: 4px;
+    background-image:url(${(props) => props.imgUrl});
+    background-size: contain;
+`
