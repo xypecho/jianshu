@@ -96,3 +96,17 @@ export const RecommendItem = styled.div`
     background-image:url(${(props) => props.imgUrl});
     background-size: contain;
 `
+
+export const LoadMore = styled.div`
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 15px;
+    border-radius: 20px;
+    color: #fff;
+    background-color: #a5a5a5;
+    display: block;
+    margin-bottom:30px;
+    cursor:pointer;
+`;

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { CHANGE_HOME_INFO } from './actionTypes';
+import { CHANGE_HOME_INFO, GET_MORE_HOME_LIST_DATA } from './actionTypes';
 
 const changeHomeData = (data) => {
     return {
@@ -10,6 +10,14 @@ const changeHomeData = (data) => {
     }
 };
 
+const getMoreHomeListData = (data, page) => {
+    return {
+        type: GET_MORE_HOME_LIST_DATA,
+        articleList: data.articleList,
+        articleListPage: page
+    }
+}
+
 export const getHomeInfo = () => {
     return (dispatch) => {
         axios.get('/api/home.json').then(res => {
@@ -18,3 +26,13 @@ export const getHomeInfo = () => {
         })
     }
 };
+
+export const getMoreHomeList = (page) => {
+    console.log(page);
+    return (dispatch) => {
+        axios.get(`/api/homeList.json?page=${page}`).then(res => {
+            const data = res.data.data;
+            dispatch(getMoreHomeListData(data, page + 1));
+        })
+    }
+}

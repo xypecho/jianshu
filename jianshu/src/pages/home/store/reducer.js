@@ -1,8 +1,9 @@
-import { CHANGE_HOME_INFO } from './actionTypes';
+import { CHANGE_HOME_INFO, GET_MORE_HOME_LIST_DATA } from './actionTypes';
 const defaultState = {
     topicList: [],
     articleList: [],
-    recommendList: []
+    recommendList: [],
+    articleListPage: 1
 };
 
 export default (state = defaultState, action) => {
@@ -13,12 +14,11 @@ export default (state = defaultState, action) => {
             newState.articleList = action.articleList;
             newState.recommendList = action.recommendList;
             return newState;
+        case GET_MORE_HOME_LIST_DATA:
+            newState.articleList.push(...action.articleList);
+            newState.articleListPage = action.articleListPage;
+            return newState;
         default:
             return state;
     }
-    // switch (action.type) {
-    //     case
-    //     default:
-    //         return state;
-    // }
 }
