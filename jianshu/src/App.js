@@ -13,8 +13,8 @@ export default class App extends React.Component {
       <Provider store={store}>
         <Fragment>
           <GlobalStyle />
-          <Header></Header>
           <BrowserRouter>
+            <Header />
             <Route path='/' exact component={Home}></Route>
             <Route path='/details' exact component={Detail}></Route>
           </BrowserRouter>

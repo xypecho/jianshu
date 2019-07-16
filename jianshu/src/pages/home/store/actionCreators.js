@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { CHANGE_HOME_INFO, GET_MORE_HOME_LIST_DATA } from './actionTypes';
+import { CHANGE_HOME_INFO, GET_MORE_HOME_LIST_DATA, CHANGE_SCROLLTOP_STATUS } from './actionTypes';
 
 const changeHomeData = (data) => {
     return {
@@ -34,5 +34,12 @@ export const getMoreHomeList = (page) => {
             const data = res.data.data;
             dispatch(getMoreHomeListData(data, page + 1));
         })
+    }
+}
+
+export const changeScrollTopStatus = (status) => {
+    return {
+        type: CHANGE_SCROLLTOP_STATUS,
+        status
     }
 }

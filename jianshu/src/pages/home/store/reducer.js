@@ -1,9 +1,10 @@
-import { CHANGE_HOME_INFO, GET_MORE_HOME_LIST_DATA } from './actionTypes';
+import { CHANGE_HOME_INFO, GET_MORE_HOME_LIST_DATA, CHANGE_SCROLLTOP_STATUS } from './actionTypes';
 const defaultState = {
     topicList: [],
     articleList: [],
     recommendList: [],
-    articleListPage: 1
+    articleListPage: 1,
+    isShowScrollToTop: false
 };
 
 export default (state = defaultState, action) => {
@@ -17,6 +18,9 @@ export default (state = defaultState, action) => {
         case GET_MORE_HOME_LIST_DATA:
             newState.articleList.push(...action.articleList);
             newState.articleListPage = action.articleListPage;
+            return newState;
+        case CHANGE_SCROLLTOP_STATUS:
+            newState.isShowScrollToTop = action.status;
             return newState;
         default:
             return state;

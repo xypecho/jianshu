@@ -110,3 +110,19 @@ export const LoadMore = styled.div`
     margin-bottom:30px;
     cursor:pointer;
 `;
+
+export const BackToTop = styled.div`
+    border: 1px solid #dcdcdc;
+    background-color: #fff;
+    transition: .1s ease-in;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    display: block;
+    line-height:50px;
+    font-size:12px;
+    position:fixed;
+    top:80%;
+    right:20%;
+`;

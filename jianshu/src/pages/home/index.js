@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { HomeWrapper, HomeLeft, HomeRight } from './style';
+import { HomeWrapper, HomeLeft, HomeRight, BackToTop } from './style';
 import Topic from './components/Topic';
 import List from './components/List';
 import Recommend from './components/Recommend';
@@ -7,6 +7,12 @@ import { connect } from 'react-redux';
 import { actionCreators } from './store';
 
 class Home extends Component {
+    scrollToTop() {
+        window.scrollTo(0, 0);
+    }
+    addEvent() {
+        window.addEventListener('scroll', this.props.changeScrollTopShow)
+    }
     render() {
         return (
             <HomeWrapper>
@@ -18,18 +24,36 @@ class Home extends Component {
                 <HomeRight>
                     <Recommend />
                 </HomeRight>
+                {this.props.isShowScrollToTop ? <BackToTop onClick={this.scrollToTop}>顶部</BackToTop> : null}
             </HomeWrapper>
         )
     }
     componentDidMount() {
         this.props.changeHomeData();
+        this.addEvent(); // 新增监听滚动事件
+    }
+    componentWillUnmount() {
+        // 组件销毁移出滚动监听
+        window.removeEventListener('scroll', this.props.changeScrollTopShow)
     }
 }
 const mapDispatchToProps = (dispatch) => {
     return {
         changeHomeData() {
             dispatch(actionCreators.getHomeInfo());
+        },
+        changeScrollTopShow() {
+            if (document.documentElement.scrollTop > 400) {
+                dispatch(actionCreators.changeScrollTopStatus(true));
+            } else {
+                dispatch(actionCreators.changeScrollTopStatus(false));
+            }
         }
     }
 }
-export default connect(null, mapDispatchToProps)(Home);
+const mapStateToProps = (state) => {
+    return {
+        isShowScrollToTop: state.home.isShowScrollToTop
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

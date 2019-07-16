@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { HeaderWrapper, Logo, Nav, NavItem, NavSearch, Addition, Button, NavWrapper, SearchInfo, SearchInfoTitle, SearchInfoTitleSwitch, SearchInfoItem } from './style';
-// import { dispatch } from "rxjs/internal/observable/range";
 import * as actionCreators from './store/actionCreators';
+import { Link } from 'react-router-dom';
 
 class Header extends Component {
     constructor(props) {
@@ -42,7 +42,9 @@ class Header extends Component {
         const { focused, handleOnfocus, handleOnblur, list } = this.props;
         return (
             <HeaderWrapper>
-                <Logo />
+                <Link to='/'>
+                    <Logo />
+                </Link>
                 <Nav>
                     <NavItem className='left active'>首页</NavItem>
                     <NavItem className='left'>下载App</NavItem>
